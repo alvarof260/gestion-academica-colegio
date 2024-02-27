@@ -30,12 +30,12 @@ const UserSchema = new mongoose.Schema({
   subjects: {
     type: [
       {
-        subject: { type: mongoose.types.ObjectId, ref: 'subjects' },
+        subject: { type: mongoose.Types.ObjectId, ref: 'subjects' },
         rate: { type: Number, min: 0, max: 20, default: 0 }
       }
     ]
   },
-  students: { type: [mongoose.types.ObjectId], ref: 'users' },
+  students: { type: [mongoose.Types.ObjectId], ref: 'users' },
   documents: {
     type: [
       {
