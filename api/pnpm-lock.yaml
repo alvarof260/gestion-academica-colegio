@@ -13,6 +13,9 @@ dependencies:
     version: 8.2.0
 
 devDependencies:
+  dotenv:
+    specifier: 16.4.5
+    version: 16.4.5
   eslint:
     specifier: ^8.0.1
     version: 8.57.0
@@ -467,6 +470,11 @@ packages:
     engines: {node: '>=6.0.0'}
     dependencies:
       esutils: 2.0.3
+    dev: true
+
+  /dotenv@16.4.5:
+    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
+    engines: {node: '>=12'}
     dev: true
 
   /ee-first@1.1.1:
