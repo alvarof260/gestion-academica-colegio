@@ -5,6 +5,7 @@ import config from './config/config.js'
 import { initializeConfigApp } from './run.js'
 
 import userRouter from './routes/user.router.js'
+import subjectRouter from './routes/subject.router.js'
 
 const app = express()
 
@@ -20,6 +21,7 @@ mongoose.connect(config.database.mongoUrl, {
       res.send('Hello World!')
     })
     app.use('/api/users', userRouter)
+    app.use('/api/subjects', subjectRouter)
 
     app.listen(PORT, () => {
       console.log(`Server is running on port http://localhost:${PORT}`)

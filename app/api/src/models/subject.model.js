@@ -9,7 +9,8 @@ const subjectSchema = new mongoose.Schema({
   },
   code: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   description: { type: String },
   teacher: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
