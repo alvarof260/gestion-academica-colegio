@@ -17,13 +17,13 @@ export default class UserMongo {
   }
 
   // get user by property (every property except _id)
-  async getByProperty (prop) {
-    return await UserDao.findOne(prop)
+  async getByProperty (prop, value) {
+    return await UserDao.findOne({ [prop]: value })
   }
 
   // get users by property (every property except _id) in an array
-  async getUsersByProperty (prop) {
-    return await UserDao.find(prop)
+  async getUsersByProperty (prop, value) {
+    return await UserDao.find({ [prop]: value })
   }
 
   // create a new user in the database

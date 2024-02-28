@@ -10,10 +10,10 @@ export function initializeConfigApp (app) {
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
   app.use(session({
-    secret: config.database.SESSION_SECRET,
+    secret: config.session.secret,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: config.database.MONGODB_URI, dbName: config.database.DB_NAME })
+    store: MongoStore.create({ mongoUrl: config.database.mongoUrl, dbName: config.database.mongoDbName })
   }))
   initializePassport()
   app.use(passport.initialize())

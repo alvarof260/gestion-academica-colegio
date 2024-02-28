@@ -15,12 +15,12 @@ export default class UserRepository {
     return await this.UserDao.getById(id)
   }
 
-  async getByProperty (prop) {
-    return await this.UserDao.getByProperty(prop)
+  async getByProperty (prop, value) {
+    return await this.UserDao.getByProperty(prop, value)
   }
 
-  async getUsersByProperty (prop) {
-    return await this.UserDao.getUsersByProperty(prop)
+  async getUsersByProperty (prop, value) {
+    return await this.UserDao.getUsersByProperty(prop, value)
   }
 
   async create (user) {

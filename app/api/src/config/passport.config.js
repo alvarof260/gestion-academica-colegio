@@ -8,22 +8,25 @@ const LocalStrategy = local.Strategy
 
 export function initializePassport () {
   passport.use('register', new LocalStrategy({
-    passReqToCallback: true,
-    usernameField: 'username',
-    passwordField: false
-  }, async (req, username, done) => {
+    passReqToCallback: true
+  }, async (req, username, password, done) => {
     try {
       const { firstname, lastname, email, age, dni, role, level, gradeSchool, gradeHighSchool } = req.body
-      const user = await UserServices.getByProperty(username)
+      const user = await UserServices.getByProperty('username', username)
+      console.log(user)
       if (user) {
         return done(null, false)
       }
+
+      password = createPassword(password)
+      console.log(password)
+
       const newUser = {
         username,
         firstname,
         lastname,
         email,
-        password: hashPassword(createPassword()),
+        password: hashPassword(password),
         age,
         dni,
         role,
@@ -43,7 +46,9 @@ export function initializePassport () {
     usernameField: 'username'
   }, async (username, password, done) => {
     try {
-      const user = await UserServices.getByProperty(username)
+      console.log(username)
+      const user = await UserServices.getByProperty('username', username)
+      console.log(user)
       if (!user) {
         return done(null, false)
       }
