@@ -13,7 +13,6 @@ export function initializePassport () {
     try {
       const { firstname, lastname, email, age, dni, role, level, gradeSchool, gradeHighSchool } = req.body
       const user = await UserServices.getByProperty('username', username)
-      console.log(user)
       if (user) {
         return done(null, false)
       }

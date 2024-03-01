@@ -1,4 +1,5 @@
 import { UserServices } from '../services/index.services.js'
+import { hashPassword } from '../utils/password.utils.js'
 
 const createUserController = async (req, res) => {
   const user = req.body
@@ -12,8 +13,6 @@ const createUserController = async (req, res) => {
 }
 
 const changeStatusController = async (req, res) => {
-  console.log(req.user)
-  if (req.user.role !== 'SUPERUSER') return res.status(401).json({ status: 'Unauthorized', message: 'You are not authorized to perform this action' })
   const { id } = req.params
   try {
     const user = await UserServices.getById(id)
@@ -27,4 +26,18 @@ const changeStatusController = async (req, res) => {
   }
 }
 
-export { createUserController, changeStatusController }
+const changePasswordController = async (req, res) => {
+  const { id } = req.params
+  const { password } = req.body
+  try {
+    const user = await UserServices.getById(id)
+    if (!user) return res.status(404).json({ status: 'error', message: 'User not found' })
+    user.password = hashPassword(password)
+    const result = await UserServices.update(id, user)
+    res.status(200).json({ status: 'success', payload: result })
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export { createUserController, changeStatusController, changePasswordController }
