@@ -19,9 +19,10 @@ const UserSchema = new mongoose.Schema({
       'TEACHER',
       'STUDENT',
       'EXSTUDENT'
-    ]
+    ],
+    default: 'STUDENT'
   },
-  status: { type: String, enum: ['ACTIVE', 'INACTIVE'] },
+  status: { type: String, enum: ['ACTIVE', 'INACTIVE'], default: 'INACTIVE' },
   lastConnention: { type: Date, default: Date.now },
   level: { type: String, enum: ['PRIMARY', 'SECONDARY'] },
   gradeSchool: { type: String, enum: ['1', '2', '3', '4', '5', '6'] },

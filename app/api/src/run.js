@@ -13,7 +13,10 @@ export function initializeConfigApp (app) {
     secret: config.session.secret,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: config.database.mongoUrl, dbName: config.database.mongoDbName })
+    store: MongoStore.create({ mongoUrl: config.database.mongoUrl, dbName: config.database.mongoDbName }),
+    cookie: {
+      maxAge: 30 * 60 * 1000
+    }
   }))
   initializePassport()
   app.use(passport.initialize())
