@@ -11,7 +11,7 @@ import { handlePolicies } from '../middlewares/handlePolicies.middleware.js'
 const userRouter = Router()
 
 userRouter.post('/', createUser)
-userRouter.put('/:id', userIsActive(), handlePolicies(['SUPERUSER']), changeStatus)
+userRouter.put('/:id', userIsActive(), handlePolicies(['SUPERUSER', 'ADMIN']), changeStatus)
 userRouter.put('/:id/password', changePassword)
 
 export default userRouter

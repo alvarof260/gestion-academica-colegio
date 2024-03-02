@@ -17,7 +17,8 @@ const changeStatusController = async (req, res) => {
   try {
     const user = await UserServices.getById(id)
     if (!user) return res.status(404).json({ status: 'error', message: 'User not found' })
-    if (user.role !== 'ADMIN') return res.status(400).json({ status: 'error', message: 'You can only change the status of an admin' })
+    if (user.role !== 'ADMIN' && req.user === 'SUPERUSER') return res.status(400).json({ status: 'error', message: 'You can only change the status of an admin (SUPERUSER)' })
+    if ((user.role === 'SUPERUSER' || user.role === 'ADMIN') && req.user === 'ADMIN') return res.status(400).json({ status: 'error', message: 'You cannot change the status of a SUPERUSER or ADMIN (ADMIN)' })
     user.status = user.status === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE'
     const result = await UserServices.update(id, user)
     res.status(200).json({ status: 'success', payload: result })
