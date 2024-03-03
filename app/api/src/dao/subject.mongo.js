@@ -13,12 +13,12 @@ export default class SubjectMongo {
     return SubjectDao.findById(id)
   }
 
-  getByProperty (prop) {
-    return SubjectDao.findOne(prop)
+  getByProperty (prop, value) {
+    return SubjectDao.findOne({ [prop]: value })
   }
 
-  getSubjectsByProperty (prop) {
-    return SubjectDao.find(prop)
+  getSubjectsByProperty (prop, value) {
+    return SubjectDao.find({ [prop]: value })
   }
 
   create (subject) {
