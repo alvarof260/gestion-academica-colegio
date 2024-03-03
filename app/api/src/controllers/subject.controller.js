@@ -1,6 +1,6 @@
 import { SubjectServices } from '../services/index.services.js'
 
-export const createSubjectController = async (req, res) => {
+const createSubjectController = async (req, res) => {
   const subject = req.body
   try {
     const newSubject = await SubjectServices.create(subject)
@@ -10,3 +10,16 @@ export const createSubjectController = async (req, res) => {
     console.log(err)
   }
 }
+
+const deleteSubjectController = async (req, res) => {
+  const { id } = req.params
+  try {
+    const subject = await SubjectServices.delete(id)
+    if (!subject) return res.status(404).json({ message: 'Subject not found' })
+    res.status(200).json(subject)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export { createSubjectController, deleteSubjectController }
