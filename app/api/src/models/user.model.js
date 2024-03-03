@@ -12,14 +12,7 @@ const UserSchema = new mongoose.Schema({
   dni: { type: String, unique: true },
   role: {
     type: String,
-    enum: [
-      'SUPERUSER',
-      'ADMIN',
-      'GUARDIAN',
-      'TEACHER',
-      'STUDENT',
-      'EXSTUDENT'
-    ],
+    enum: ['SUPERUSER', 'ADMIN', 'GUARDIAN', 'TEACHER', 'STUDENT', 'EXSTUDENT'],
     default: 'STUDENT'
   },
   status: { type: String, enum: ['ACTIVE', 'INACTIVE'], default: 'INACTIVE' },
@@ -47,9 +40,14 @@ const UserSchema = new mongoose.Schema({
     default: []
   },
   enrollments: {
-    type: String,
-    enum: ['PENDING', 'CONDITIONAL', 'REVOKED', 'APPROVED', 'REJECTED'],
-    default: 'PENDING'
+    type: [
+      {
+        enrollment: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'enrollments'
+        }
+      }
+    ]
   }
 })
 
