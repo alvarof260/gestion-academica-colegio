@@ -29,6 +29,20 @@ const addTeacherToSubjectController = async (req, res) => {
   }
 }
 
+const deleteTeacherFromSubjectController = async (req, res) => {
+  const { sid } = req.params
+  try {
+    const subject = await SubjectServices.getById(sid)
+    if (!subject) return res.status(404).json({ message: 'Subject not found' })
+    if (!subject.teacher) return res.status(400).json({ message: 'Subject does not have a teacher' })
+    subject.teacher = null
+    const result = await SubjectServices.update(sid, subject)
+    res.status(200).json(result)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 const deleteSubjectController = async (req, res) => {
   const { id } = req.params
   try {
@@ -40,4 +54,4 @@ const deleteSubjectController = async (req, res) => {
   }
 }
 
-export { createSubjectController, addTeacherToSubjectController, deleteSubjectController }
+export { createSubjectController, addTeacherToSubjectController, deleteTeacherFromSubjectController, deleteSubjectController }
