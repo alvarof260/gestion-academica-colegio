@@ -4,23 +4,23 @@ export default class SubjectRepository {
   }
 
   async getAll () {
-    return await this.SubjectDao.find()
+    return await this.SubjectDao.getAll()
   }
 
   async getAllView () {
-    return await this.SubjectDao.find().lean().exec()
+    return await this.SubjectDao.getAllView()
   }
 
   async getById (id) {
-    return await this.SubjectDao.findById(id)
+    return await this.SubjectDao.getById(id)
   }
 
   async getByProperty (prop) {
-    return await this.SubjectDao.findOne(prop)
+    return await this.SubjectDao.getByProperty(prop)
   }
 
   async getSubjectsByProperty (prop) {
-    return await this.SubjectDao.find(prop)
+    return await this.SubjectDao.getSubjectsByProperty(prop)
   }
 
   async create (subject) {
