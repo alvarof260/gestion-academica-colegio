@@ -5,7 +5,7 @@ const enrollmentCollection = 'enrollments'
 const EnrollmentSchema = new mongoose.Schema({
   status: {
     type: String,
-    enum: ['PENDING', 'CONDITIONAL', 'REVOKED', 'APPROVED', 'REJECTED'],
+    enum: ['PENDING', 'CONDITIONAL', 'REVOKED', 'CURRENT', 'REJECTED'],
     default: 'PENDING'
   },
   year: { type: Number }

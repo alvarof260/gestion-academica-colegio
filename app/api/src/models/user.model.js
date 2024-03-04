@@ -42,6 +42,7 @@ const UserSchema = new mongoose.Schema({
   enrollments: {
     type: [
       {
+        _id: false,
         enrollment: {
           type: mongoose.Schema.Types.ObjectId,
           ref: 'enrollments'

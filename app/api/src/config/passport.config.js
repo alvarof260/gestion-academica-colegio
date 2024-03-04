@@ -1,7 +1,7 @@
 import passport from 'passport'
 import local from 'passport-local'
 
-import { UserServices } from '../services/index.services.js'
+import { UserServices, EnrollmentServices } from '../services/index.services.js'
 import { createPassword, hashPassword, isValidPassword } from '../utils/password.utils.js'
 
 const LocalStrategy = local.Strategy
@@ -20,6 +20,8 @@ export function initializePassport () {
       password = createPassword(password)
       console.log(password)
 
+      const enrollment = await EnrollmentServices.create({ year: new Date().getFullYear() })
+
       const newUser = {
         username,
         firstname,
@@ -31,7 +33,8 @@ export function initializePassport () {
         role,
         level,
         gradeSchool,
-        gradeHighSchool
+        gradeHighSchool,
+        enrollments: [{ enrollment: enrollment._id }]
       }
 
       const result = await UserServices.create(newUser)
