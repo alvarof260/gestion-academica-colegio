@@ -1,4 +1,4 @@
-import { UserServices } from '../services/index.services.js'
+import { UserServices, SubjectServices } from '../services/index.services.js'
 import { hashPassword } from '../utils/password.utils.js'
 
 const createUserController = async (req, res) => {
@@ -27,6 +27,25 @@ const changeStatusController = async (req, res) => {
   }
 }
 
+const giveGradeToStudentController = async (req, res) => {
+  const { uid, sid } = req.params
+  const { grade } = req.body
+  try {
+    const user = await UserServices.getById(uid)
+    if (!user) return res.status(404).json({ status: 'error', message: 'User not found' })
+    if (user.role !== 'STUDENT') return res.status(400).json({ status: 'error', message: 'The user is not a student' })
+    const subject = await SubjectServices.getById(sid)
+    if (!subject) return res.status(404).json({ status: 'error', message: 'Subject not found' })
+    const index = user.subjects.findIndex(el => el.subject.toString() === sid)
+    if (index === -1) return res.status(400).json({ status: 'error', message: 'The student is not enrolled in the subject' })
+    user.subjects[index].rate = grade
+    const result = await UserServices.update(uid, user)
+    res.status(200).json({ status: 'success', payload: result })
+  } catch (error) {
+
+  }
+}
+
 const changePasswordController = async (req, res) => {
   const { id } = req.params
   const { password } = req.body
@@ -41,4 +60,4 @@ const changePasswordController = async (req, res) => {
   }
 }
 
-export { createUserController, changeStatusController, changePasswordController }
+export { createUserController, changeStatusController, giveGradeToStudentController, changePasswordController }
