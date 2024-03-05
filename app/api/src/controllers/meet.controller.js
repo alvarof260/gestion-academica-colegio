@@ -1,4 +1,9 @@
+import { Resend } from 'resend'
+
 import { MeetServices, UserServices } from '../services/index.services.js'
+import config from '../config/config.js'
+
+const resend = new Resend(config.resend.api_key)
 
 const createMeetController = async (req, res) => {
   const { uid, uid2 } = req.params
@@ -10,6 +15,13 @@ const createMeetController = async (req, res) => {
     if (!user2) return res.status(404).json({ message: 'User not found' })
     if (user2.role !== 'TEACHER' && user2.role !== 'GUARDIAN') return res.status(400).json({ message: 'Invalid role' })
     const result = await MeetServices.create({ to: uid, from: uid2, expiration })
+    const { error } = await resend.emails.send({
+      from: 'Academia <onboarding@resend.dev>',
+      to: user2.email,
+      subject: 'Meet created',
+      html: `<p>${user.firstname} ${user.lastname} has created a meet with you. <a href="http://localhost:3000/api/meets/${result._id}">Click here to see it</a></p>`
+    })
+    if (error) return res.status(500).json({ message: error })
     res.status(201).json(result)
   } catch (err) {
     console.log(err)

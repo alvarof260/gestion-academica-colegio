@@ -12,5 +12,9 @@ export default {
   },
   session: {
     secret: process.env.SECRET_KEY || 'mysecret'
+  },
+  resend: {
+    api_key: process.env.API_KEY,
+    from: process.env.EMAIL_OWNER
   }
 }
