@@ -1,5 +1,10 @@
+import { Resend } from 'resend'
+
 import { UserServices, SubjectServices } from '../services/index.services.js'
 import { hashPassword } from '../utils/password.utils.js'
+import config from '../config/config.js'
+
+const resend = new Resend(config.resend.api_key)
 
 const createUserController = async (req, res) => {
   const user = req.body
@@ -39,6 +44,23 @@ const giveGradeToStudentController = async (req, res) => {
     const index = user.subjects.findIndex(el => el.subject.toString() === sid)
     if (index === -1) return res.status(400).json({ status: 'error', message: 'The student is not enrolled in the subject' })
     user.subjects[index].rate = grade
+    if (grade >= 13) {
+      const { error } = await resend.emails.send({
+        from: 'Academic <onboarding@resend.dev>',
+        to: user.email,
+        subject: 'Subject approved',
+        html: `<p>Your grade in ${subject.name} has been approved. You have passed the subject</p>`
+      })
+      if (error) return res.status(500).json({ status: 'error', message: error })
+    } else {
+      const { error } = await resend.emails.send({
+        from: 'Academic <onboarding@resend.dev>',
+        to: user.email,
+        subject: 'Subject failed',
+        html: `<p>Your grade in ${subject.name} has been disapproved. You have failed the subject</p>`
+      })
+      if (error) return res.status(500).json({ status: 'error', message: error })
+    }
     const result = await UserServices.update(uid, user)
     res.status(200).json({ status: 'success', payload: result })
   } catch (error) {

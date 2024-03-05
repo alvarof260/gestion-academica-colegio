@@ -16,7 +16,7 @@ const createMeetController = async (req, res) => {
     if (user2.role !== 'TEACHER' && user2.role !== 'GUARDIAN') return res.status(400).json({ message: 'Invalid role' })
     const result = await MeetServices.create({ to: uid, from: uid2, expiration })
     const { error } = await resend.emails.send({
-      from: 'Academia <onboarding@resend.dev>',
+      from: 'Academic <onboarding@resend.dev>',
       to: user2.email,
       subject: 'Meet created',
       html: `<p>${user.firstname} ${user.lastname} has created a meet with you. <a href="http://localhost:3000/api/meets/${result._id}">Click here to see it</a></p>`
