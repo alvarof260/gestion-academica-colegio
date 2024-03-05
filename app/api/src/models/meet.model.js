@@ -13,17 +13,12 @@ const meetSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    required: true,
     default: Date.now
   },
   assist: {
     type: String,
     enum: ['YES', 'NO', 'PENDING'],
     default: 'PENDING'
-  },
-  expiration: {
-    type: Date,
-    required: true
   }
 })
 

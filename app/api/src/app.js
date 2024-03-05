@@ -8,6 +8,7 @@ import userRouter from './routes/user.router.js'
 import subjectRouter from './routes/subject.router.js'
 import sessionRouter from './routes/session.router.js'
 import enrollmentRouter from './routes/enrollment.router.js'
+import meetRouter from './routes/meet.router.js'
 
 const app = express()
 
@@ -26,6 +27,7 @@ mongoose.connect(config.database.mongoUrl, {
     app.use('/api/subjects', subjectRouter)
     app.use('/api/session', sessionRouter)
     app.use('/api/enrollments', enrollmentRouter)
+    app.use('/api/meets', meetRouter)
 
     app.listen(PORT, () => {
       console.log(`Server is running on port http://localhost:${PORT}`)
