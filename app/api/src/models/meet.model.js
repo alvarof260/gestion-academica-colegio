@@ -27,4 +27,4 @@ const meetSchema = new mongoose.Schema({
   }
 })
 
-export const Meet = mongoose.model(meetCollection, meetSchema)
+export const MeetDao = mongoose.model(meetCollection, meetSchema)
